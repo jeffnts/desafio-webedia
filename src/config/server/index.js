@@ -22,14 +22,9 @@ function databaseConnection(){
     }
 }
 
-function login(app, port){
-    const HOST = process.env.HOST || '0.0.0.0'
-    app.listen(port,HOST, ()=>{
-        console.log(`App linten on port ${port}`)
-    })
-}
+
  module.exports  = {     
      initServer,
      databaseConnection,
-     login
+    
  }
