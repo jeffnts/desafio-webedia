@@ -2,7 +2,7 @@ import express from 'express'
 
 const router = express.Router()
 
-import {authenticate} from '../controllers/authController'
+import {authenticate} from './authController'
 
 router.post('/auth/login', authenticate )
 

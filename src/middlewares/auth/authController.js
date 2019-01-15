@@ -1,4 +1,4 @@
-import userModel from '../models/userModel'
+import userModel from '../../models/userModel'
 import jwt from 'jsonwebtoken'
 
 module.exports = {
@@ -27,9 +27,10 @@ module.exports = {
                     token
                 })
 
-            }catch(err){
+            }catch(error){
                 return res.status(500).json({
-                    message: 'Erro no servidor ao tentar cadastrar o usuário.'
+                    message: 'Erro no servidor ao tentar cadastrar o usuário.',
+                    error
                   })
             }
         },
@@ -49,9 +50,10 @@ module.exports = {
                 };
                 return next()
 
-            }catch(err){
+            }catch(error){
                 return res.status(500).json({
-                    message: 'Erro no servidor ao tentar cadastrar o usuário.'
+                    message: 'Erro no servidor ao tentar cadastrar o usuário.',
+                    error
                   })
             }
         }

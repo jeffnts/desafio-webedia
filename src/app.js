@@ -19,8 +19,6 @@ app.use(bodyParser.json())
 app.use(bodyParser.urlencoded({ extended: true}))
 
 //Routes definitions
-//import userRouter from './routes/userRouter'
-//app.use('/api', userRouter)
 require('./routes/userRouter')(app)
-require('./routes/authRouter')(app)
+require('./middlewares/auth/authRouter')(app)
 export default app
