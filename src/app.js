@@ -8,8 +8,6 @@ import bodyParser from 'body-parser'
 
 const app = express()
 
-
-
 if(!module.parent) initServer(app, 4000) 
 
 databaseConnection()
@@ -18,7 +16,7 @@ databaseConnection()
 app.use(bodyParser.json())
 app.use(bodyParser.urlencoded({ extended: true}))
 
-//Routes definitions
-require('./routes/userRouter')(app)
+require('./routes')(app)
 require('./middlewares/auth/authRouter')(app)
+
 export default app

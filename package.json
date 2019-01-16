@@ -1,21 +1,29 @@
 {
   "name": "desafio-webedia",
   "version": "1.0.0",
-  "description": "",
+  "description": "API de um Blog feita como processo de seleção para Webedia.",
   "main": "index.js",
   "scripts": {
     "start": "npx nodemon --exec babel-node src/app.js",
-    "test": "echo \"Error: no test specified\" && exit 1"
+    "prod": "node build/app.js",
+    "test": "jest --runInBand",
+    "clean": "npx rimraf build && mkdir build",
+    "cleanSrc": "npx rimraf  src",
+    "build-server": "babel -d ./build ./src -s",
+    "build": "npm run clean & npm run build-server",
+    "docker:dev": "docker-compose -f docker-compose-dev.yml up",
+    "docker:prod": "docker-compose up --build"
   },
   "keywords": [],
-  "author": "",
+  "author": "Jefferson Nascimento Teixeira de Souza.",
   "license": "ISC",
   "dependencies": {
     "bcryptjs": "^2.4.3",
     "body-parser": "^1.18.3",
     "express": "^4.16.4",
     "jsonwebtoken": "^8.4.0",
-    "mongoose": "^5.4.4"
+    "mongoose": "^5.4.4",
+    "mongoose-paginate-v2": "^1.0.16"
   },
   "devDependencies": {
     "babel-cli": "^6.26.0",

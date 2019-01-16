@@ -1,0 +1,32 @@
+version: "3"
+services:
+  redis:
+    container_name: cache
+    image: redis    
+    expose:
+      - 6379
+  
+  mongo:
+    container_name: mongo   
+    image: mongo    
+    ports:
+      - "27017:27017"
+    
+  api:
+    container_name: desafio-webedia-api
+    restart: always    
+    build:
+      context: .
+      dockerfile: Dockerfile.dev
+    command: npx nodemon -L --exec babel-node src/app.js
+    ports:
+      - "4000:4000"
+    volumes:
+      - .:/usr/api/dev
+    links:
+      - mongo
+      - redis
+
+  
+
+

@@ -1,0 +1,26 @@
+version: "3"
+services:
+  api:
+    container_name: desafio-webedia-api
+    build: .
+    command: npm run prod
+    ports:
+      - "4000:4000"
+    links:
+      - mongo
+      - redis
+  
+  mongo:
+    container_name: mongo   
+    image: mongo    
+    ports:
+      - "27017:27017"
+  
+  redis:
+    container_name: cache
+    image: redis    
+    expose:
+      - 6379
+  
+  
+  

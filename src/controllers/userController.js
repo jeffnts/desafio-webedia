@@ -6,7 +6,8 @@ module.exports = {
 
     create: async (req, res) =>{
         try{           
-            console.log
+            const {userName} = req.body
+
             if(await userModel.findOne({userName})){
                 return res.status(403).json({
                     message: 'Nome de usuário já está sendo usado!'
@@ -15,14 +16,14 @@ module.exports = {
                 
             
             await userModel.create(req.body)
-
+                
             return res.status(201).json({
                 message: 'Usuário criado com sucesso!'
             })
 
         }catch(error){
             return res.status(500).json({
-                message: 'Erro no servidor ao tentar encontrar o usuário.',
+                message: 'Erro no servidor ao tentar cadastrar o usuário.',
                 error
               })
         }
