@@ -78,13 +78,13 @@ module.exports ={
 
             if(comment === null || article === null){
                 return res.status(404).json({
-                    message: 'Comentário ou artigo não encontrado!'
+                    message: 'Comentário ou artigo não encontrado.'
                 })
             }
 
             if(!(comment.user == id)){
                 return res.status(401).json({
-                    message: 'Usuário Não autorizado'
+                    message: 'Usuário Não autorizado.'
                 }) 
             }
 
@@ -115,7 +115,7 @@ module.exports ={
 
             if(comment === null || article === null){
                 return res.status(404).json({
-                    message: 'Comentário ou artigo não encontrado!'
+                    message: 'Comentário ou artigo não encontrado.'
                 })
             }
                 

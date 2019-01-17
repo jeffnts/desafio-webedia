@@ -45,7 +45,7 @@ mongod
 
 2. Após o mongo está rodando, execute o comando para executar a aplicação:
 ```shell
-npm run dev
+npm start
 ```
 3. Depois abra seu browser em:
 ```shell
@@ -64,20 +64,21 @@ npm run docker:dev
 
 ## Estrutura do projeto
 
-
->- 📂src  
->   - 📁config
->       - 📁database
->       - 📁server
->       - 📁tests
->   - 📁controllers
->   - 📁middlewares
->       - 📂auth
->           - 📁tests
->   - 📁models
->   - 📁routes
->   - 📁tests 
-
+```
+- 📂src  
+   - 📁config
+       - 📁database
+       - 📁server
+       - 📁tests
+   - 📁controllers
+   - 📁docs
+   - 📁middlewares
+       - 📂auth
+           - 📁tests
+   - 📁models
+   - 📁routes
+   - 📁tests 
+```
 ### Descrição:
 |Pasta|Descrição|
 |-----|------|
@@ -85,9 +86,10 @@ npm run docker:dev
 📁config | Onde contém toda a configuração da aplicação
 📁config > 📁database | Configurações do Banco de Dados
 📁config > 📁server | Configurações do Servidor
-📁config > 📁tests | Configurações do testes
+📁config > 📁tests | Configurações dos Testes
 📁controllers | Pasta onde se encontra a lógica da aplicação
 📁middlewares | Onde está todos os middlewares, incluindo a autenticação, não sabe o que é middleware, [veja aqui](https://www.redhat.com/pt-br/topics/middleware/what-is-middleware)  
+📁docs | Documentação das rotas da api, para editá-la use o [Swagger Editor](https://editor.swagger.io/)
 📁auth | Autenticação do sistema
 📁auth > 📁tests | Testes relativos à autenticação
 📁models| Modelo das tabelas que serão geradas no MongoDB
@@ -95,6 +97,54 @@ npm run docker:dev
 📁tests | Testes gerais da aplicação
 
 ### Rotas
-#### Veja toda a documentação sobre as rotas da aplicação aqui: 
+#### Lista das Rotas:
+
+#####Autenticação
+|Verbo | Caminho|
+|------|--------|
+|POST | /api/auth/login|
+
+#####Usuário
+|Verbo | Caminho|Observações|
+|------|--------|----------|
+|POST | /api/user|
+|GET | /api/user|Usuário precisa estar autenticado|
+|PUT | /api/user|Usuário precisa estar autenticado|
+|DELETE | /api/user|Usuário precisa estar autenticado|
+
+#####Autor
+|Verbo | Caminho|
+|------|--------|
+|POST | /api/author|
+|GET | /api/author|
+|GET | /api/author?limit&offset |
+|GET | /api/author/:id|
+|PUT | /api/author/:id|
+|DELETE | /api/author/:id|
+
+#####Artigo
+|Verbo | Caminho|
+|------|--------|
+|POST | /api/article|
+|GET | /api/article|
+|GET | /api/article?offset&limit|
+|GET | /api/article/:permalink|
+|PUT | /api/article/:permalink|
+|DELETE | /api/article/:permalink|
+
+#####Comentários
+|Verbo | Caminho|Observações|
+|------|--------|----------|
+|POST | /comments/:permalink|Usuário precisa estar autenticado|
+|GET | /comments/:permalink|Usuário precisa estar autenticado|
+|GET | /comments/:permalink?offset&limit|Usuário precisa estar autenticado|
+|PUT | /comments/:commentId/:permalink|Usuário precisa estar autenticado|
+|DELETE | /comments/:commentId/:permalink|Usuário precisa estar autenticado|
+
+
+##### Veja toda a documentação sobre as rotas aqui:
+
+Após sua aplicação estiver rodando vá em http://localhost:4000 
+
 
  

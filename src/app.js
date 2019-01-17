@@ -1,6 +1,7 @@
 import {
         initServer,
-        databaseConnection
+        databaseConnection,
+        initSwagger
 } from './config/server'
 
 import express from 'express'
@@ -16,7 +17,10 @@ databaseConnection()
 app.use(bodyParser.json())
 app.use(bodyParser.urlencoded({ extended: true}))
 
+
 require('./routes')(app)
 require('./middlewares/auth/authRouter')(app)
+
+initSwagger(app)
 
 export default app

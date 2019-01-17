@@ -98,11 +98,11 @@ module.exports = {
             })            
 
             return res.status(200).json({
-                message: 'Autor deletado com sucesso!' 
+                message: 'Autor removido com sucesso!' 
             })
         } catch (error) {
             return res.status(500).json({
-                message: 'Erro no servidor ao tentar deletar o autor.',
+                message: 'Erro no servidor ao tentar remover o autor.',
                 error: error.message
               }) 
         }

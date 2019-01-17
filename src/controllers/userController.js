@@ -14,7 +14,7 @@ module.exports = {
                 })
             }
                 
-            
+                 
             await userModel.create(req.body)
                 
             return res.status(201).json({

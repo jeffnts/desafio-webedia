@@ -11,14 +11,14 @@ module.exports = {
 
                 if(await user === null){
                     return res.status(404).json({
-                        messaga: 'Usuário não encontrado!'
+                        messaga: 'Usuário ou senha inválidos!'
                     })
                 }
 
                 const authenticate = await user.authenticate(password)
                 if(!authenticate){
                     return res.status(400).json({
-                        message: 'Usuário não autenticado.'
+                        message: 'Nome de Usuário e Senha são obrigatórios.'
                     })
                 }
                 const  token =  `${jwt.sign({ id: user._id }, process.env.SECRET_KEY, { expiresIn: '1d'})}`
@@ -29,7 +29,7 @@ module.exports = {
 
             }catch(error){
                 return res.status(500).json({
-                    message: 'Erro no servidor ao tentar cadastrar o usuário.',
+                    message: 'Erro no servidor ao tentar autenticar o usuário.',
                     error
                   })
             }
@@ -52,7 +52,7 @@ module.exports = {
 
             }catch(error){
                 return res.status(500).json({
-                    message: 'Erro no servidor ao tentar cadastrar o usuário.',
+                    message: 'Erro no servidor ao tentar autenticar o usuário.',
                     error
                   })
             }

@@ -1,7 +1,8 @@
 require('dotenv').config()
+import swaggerUi from 'swagger-ui-express'
 
 
- function initServer(app, port){
+function initServer(app, port){
     const PORT = process.env.PORT || port
     const HOST = process.env.HOST || '0.0.0.0'
         
@@ -22,9 +23,15 @@ function databaseConnection(){
     }
 }
 
+function initSwagger(app){   
+    const swaggerFile = require('../../docs/swagger.json')
+    swaggerFile.host = process.env.URL_SWAGGER
+    app.use('/', swaggerUi.serve, swaggerUi.setup(swaggerFile))
+}
 
  module.exports  = {     
      initServer,
      databaseConnection,
+     initSwagger
     
  }

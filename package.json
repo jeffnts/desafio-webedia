@@ -25,7 +25,9 @@
     "express": "^4.16.4",
     "jsonwebtoken": "^8.4.0",
     "mongoose": "^5.4.4",
-    "mongoose-paginate-v2": "^1.0.16"
+    "mongoose-paginate-v2": "^1.0.16",
+    "swagger-jsdoc": "^3.2.6",
+    "swagger-ui-express": "^4.0.2"
   },
   "devDependencies": {
     "babel-cli": "^6.26.0",

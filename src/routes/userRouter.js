@@ -3,7 +3,12 @@ const router = express.Router()
 
 import {create, show, update, remove} from '../controllers/userController'
 import{isAuthenticated} from '../middlewares/auth/authController'
-
+/**
+ * @swagger
+ * /user:
+ *    get:
+ *      description: This should return all users
+ */
 router
     .post('/user', create)
     .get('/user',isAuthenticated, show)
