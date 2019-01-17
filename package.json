@@ -9,10 +9,12 @@
     "test": "jest --runInBand",
     "clean": "npx rimraf build && mkdir build",
     "cleanSrc": "npx rimraf  src",
-    "build-server": "babel -d ./build ./src -s",
+    "build-server": "npx babel src --out-dir build",
     "build": "npm run clean & npm run build-server",
+    "docker:dev:build": "docker-compose -f docker-compose-dev.yml build",
     "docker:dev": "docker-compose -f docker-compose-dev.yml up",
-    "docker:prod": "docker-compose up --build"
+    "docker:prod:build": "docker-compose build",
+    "docker:prod": "docker-compose up "
   },
   "keywords": [],
   "author": "Jefferson Nascimento Teixeira de Souza.",

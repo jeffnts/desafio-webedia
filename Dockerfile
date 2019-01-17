@@ -9,7 +9,7 @@ COPY . .
 RUN npm run build
 RUN npm run cleanSrc
 
-#Commented becouse expose is not suported by heroku
-EXPOSE 4000
+#Commented because expose is not supported by heroku
+#EXPOSE 4000
 
 CMD ["npm", "run", "prod"]
