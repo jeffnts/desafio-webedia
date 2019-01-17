@@ -99,12 +99,12 @@ npm run docker:dev
 ### Rotas
 #### Lista das Rotas:
 
-#####Autenticação
+##### Autenticação
 |Verbo | Caminho|
 |------|--------|
 |POST | /api/auth/login|
 
-#####Usuário
+##### Usuário
 |Verbo | Caminho|Observações|
 |------|--------|----------|
 |POST | /api/user|
@@ -112,7 +112,7 @@ npm run docker:dev
 |PUT | /api/user|Usuário precisa estar autenticado|
 |DELETE | /api/user|Usuário precisa estar autenticado|
 
-#####Autor
+##### Autor
 |Verbo | Caminho|
 |------|--------|
 |POST | /api/author|
@@ -122,7 +122,7 @@ npm run docker:dev
 |PUT | /api/author/:id|
 |DELETE | /api/author/:id|
 
-#####Artigo
+##### Artigo
 |Verbo | Caminho|
 |------|--------|
 |POST | /api/article|
@@ -132,7 +132,7 @@ npm run docker:dev
 |PUT | /api/article/:permalink|
 |DELETE | /api/article/:permalink|
 
-#####Comentários
+##### Comentários
 |Verbo | Caminho|Observações|
 |------|--------|----------|
 |POST | /comments/:permalink|Usuário precisa estar autenticado|
