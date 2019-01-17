@@ -33,7 +33,7 @@ cd desafio-webedia
 
 3. Instale as dependências através do comando:
 ```shell
-npm start
+npm install
 ```
 
 ## Execução
