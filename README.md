@@ -1,14 +1,15 @@
 # Instruções
 <hr />
+<!-- 
+## Conteúdo
+1. [Descrição](#descricao)
+2. [Pré requisitos](#pre-requisitos)
+3. [Instalação](#instalacao)
+4. [Execução](#execução)
+5. [Estrutura do projeto](#estrutura-do-projeto)
+6. [Deploy](#deploy) -->
 
-##Conteúdo
-1. [Descrição](#Descrição)
-2. [Pré requisitos](#pré-requisitos)
-3. [Instalação](#Instalação)
-4. [Execução](#Execução)
-5. [Estrutura do projeto](#Estrutura-do-projeto)
-
-## 1. Descrição
+## 1. Descrição 
 API que consiste no back-end de um blog, feita utilizando o modelo arquitetural REST, como parte do processo de seleção da [web**edia**](http://www.webedia.com.br/).
 
 
@@ -47,6 +48,7 @@ npm install
 4. Defina as Variáveis de Ambiente:
 Junto com o projeto, na raiz do mesmo, já se encontra um arquivo ***.env*** com essas variáveis definidas.
 ```
+URL_DB_PRODUCTION = URL de conexão do MongoDB (Produção)
 URL_DB_DEVELOPMENT = URL de conexão do MongoDB (Desenvolvimento)
 URL_DB_TESTS = URL de conexão do MongoDB (Testes)
 SECRET_KEY = Chave Secreta para proteger a Autenticação
@@ -163,5 +165,20 @@ npm run docker:dev
 
 Após sua aplicação estiver rodando vá em http://localhost:4000 
 
+## 6. Deploy
+Use estes scripts para gerar uma pasta pronta para produção e implantação do blog.
 
+>Comando que irá gerar uma pasta com o nome build/, lá conterá todo código do >blog pronto para que seja implantado em um servidor.
+>```shell
+>npm run build
+>```
  
+ >Apaga a pasta src/
+ >```shell
+ >npm run cleanSrc
+ >```
+
+ >Roda o servidor detro da pasta build/
+ >```shell
+ > npm run prod
+ >```

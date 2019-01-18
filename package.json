@@ -9,7 +9,7 @@
     "test": "jest --runInBand",
     "clean": "npx rimraf build && mkdir build",
     "cleanSrc": "npx rimraf  src",
-    "build-server": "npx babel src --out-dir build",
+    "build-server": "babel src --out-dir build",
     "build": "npm run clean & npm run build-server",
     "docker:dev:build": "docker-compose -f docker-compose-dev.yml build",
     "docker:dev": "docker-compose -f docker-compose-dev.yml up",
@@ -31,6 +31,7 @@
     "swagger-ui-express": "^4.0.2"
   },
   "devDependencies": {
+    "babel": "^6.23.0",
     "babel-cli": "^6.26.0",
     "babel-preset-env": "^1.7.0",
     "babel-preset-stage-3": "^6.24.1",
