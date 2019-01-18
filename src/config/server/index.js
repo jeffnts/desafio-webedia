@@ -1,4 +1,4 @@
-require('dotenv').config()
+if (process.env.NODE_ENV === 'developent') require('dotenv').config()
 import swaggerUi from 'swagger-ui-express'
 import redis from 'redis'
 
