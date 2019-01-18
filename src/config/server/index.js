@@ -1,4 +1,4 @@
-// require('dotenv').config()
+if (process.env.NODE_ENV !== 'production') require('dotenv').config()
 import swaggerUi from 'swagger-ui-express'
 import redis from 'redis'
 
@@ -15,24 +15,24 @@ function initServer(app, port){
 
 function databaseConnection(){
     if(process.env.NODE_ENV === 'test'){
-        const database = require('../database/test')
+        const database = require('../database/testDB')
         database.connect()
     }
     else if(process.env.NODE_ENV === 'development'){
-        const database = require('../database/development');
+        const database = require('../database/developmentDB');
         database.connect()
     }
     else if(process.env.NODE_ENV === 'production'){
-        const database = require('../database/production');
+        const database = require('../database/productionDB');
         database.connect()
     }
 }
 
 function redisConnection(){
-    // let client = redis.createClient()
-    // client.on('connect', () =>{
-    //     console.log('Connected to Redis.')
-    // })
+    let client = redis.createClient()
+    client.on('connect', () =>{
+        console.log('Connected to Redis.')
+    })
 }
 
 function initSwagger(app){   

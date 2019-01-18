@@ -28,4 +28,4 @@ require('./middlewares/auth/authRouter')(app)
 
 initSwagger(app)
 
-export default app
+module.exports = app

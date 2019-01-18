@@ -23,6 +23,7 @@ services:
       - "4000:4000"
     volumes:
       - .:/usr/api/dev
+      - /usr/api/node_modules
     links:
       - mongo
       - redis
