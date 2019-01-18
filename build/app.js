@@ -18,9 +18,11 @@ function _interopRequireDefault(obj) { return obj && obj.__esModule ? obj : { de
 
 const app = (0, _express2.default)();
 
-if (!module.parent) (0, _server.initServer)(app, 4000);
+(0, _server.redisConnection)();
 
 (0, _server.databaseConnection)();
+
+if (!module.parent) (0, _server.initServer)(app, 4000);
 
 //Body Parser config
 app.use(_bodyParser2.default.json());

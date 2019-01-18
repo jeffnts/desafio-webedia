@@ -4,6 +4,10 @@ var _swaggerUiExpress = require('swagger-ui-express');
 
 var _swaggerUiExpress2 = _interopRequireDefault(_swaggerUiExpress);
 
+var _redis = require('redis');
+
+var _redis2 = _interopRequireDefault(_redis);
+
 function _interopRequireDefault(obj) { return obj && obj.__esModule ? obj : { default: obj }; }
 
 require('dotenv').config();
@@ -31,6 +35,13 @@ function databaseConnection() {
     }
 }
 
+function redisConnection() {
+    // let client = redis.createClient()
+    // client.on('connect', () =>{
+    //     console.log('Connected to Redis.')
+    // })
+}
+
 function initSwagger(app) {
     const swaggerFile = require('../../docs/swagger.json');
     swaggerFile.host = process.env.URL_SWAGGER;
@@ -40,6 +51,7 @@ function initSwagger(app) {
 module.exports = {
     initServer,
     databaseConnection,
+    redisConnection,
     initSwagger
 
 };

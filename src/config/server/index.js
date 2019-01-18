@@ -1,5 +1,6 @@
 require('dotenv').config()
 import swaggerUi from 'swagger-ui-express'
+import redis from 'redis'
 
 
 function initServer(app, port){
@@ -27,6 +28,13 @@ function databaseConnection(){
     }
 }
 
+function redisConnection(){
+    // let client = redis.createClient()
+    // client.on('connect', () =>{
+    //     console.log('Connected to Redis.')
+    // })
+}
+
 function initSwagger(app){   
     const swaggerFile = require('../../docs/swagger.json')
     swaggerFile.host = process.env.URL_SWAGGER
@@ -36,6 +44,7 @@ function initSwagger(app){
  module.exports  = {     
      initServer,
      databaseConnection,
+     redisConnection,
      initSwagger
     
  }

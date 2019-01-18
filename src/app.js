@@ -1,6 +1,7 @@
 import {
         initServer,
         databaseConnection,
+        redisConnection,
         initSwagger
 } from './config/server'
 
@@ -9,9 +10,13 @@ import bodyParser from 'body-parser'
 
 const app = express()
 
-if(!module.parent) initServer(app, 4000) 
+redisConnection()
 
 databaseConnection()
+
+if(!module.parent) initServer(app, 4000) 
+
+
 
 //Body Parser config
 app.use(bodyParser.json())
