@@ -1,13 +1,13 @@
 {
   "swagger" : "2.0",
   "info" : {
+    "description" : "Documentação da definição das rotas da API",
     "version" : "1.0.0",
     "title" : "Desafio Webedia Blog API"
   },
   "basePath" : "/api/",
   "tags" : [ {
-    "name" : "Desafio Webedia",
-    "description" : "Documentação da definição das rotas da API"
+    "name" : "Desafio Webedia"
   } ],
   "schemes" : [ "http" ],
   "consumes" : [ "application/json" ],
@@ -71,7 +71,7 @@
         }
       }
     },
-    "/users" : {
+    "/user" : {
       "get" : {
         "tags" : [ "Usuários" ],
         "summary" : "Retorna todos os usuários cadastrados do sistema. Para realizar esta operação o usuário precisa estar autenticado.",

@@ -21,6 +21,10 @@ function databaseConnection(){
         const database = require('../database/development');
         database.connect()
     }
+    else if(process.env.NODE_ENV === 'production'){
+        const database = require('../database/production');
+        database.connect()
+    }
 }
 
 function initSwagger(app){   
