@@ -5,11 +5,11 @@ import {create, list, show, update, remove} from '../controllers/articleControll
 
 
 router
-    .post('/article', create)
-    .get('/article', list)
-    .get('/article/:permalink', show)
-    .put('/article/:permalink', update)
-    .delete('/article/:permalink', remove)
+    .post('/articles', create)
+    .get('/articles', list)
+    .get('/articles/:permalink', show)
+    .put('/articles/:permalink', update)
+    .delete('/articles/:permalink', remove)
        
 
 module.exports = app => app.use('/api', router)

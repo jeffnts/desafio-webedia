@@ -11,7 +11,7 @@ module.exports = {
 
                 if(await user === null){
                     return res.status(404).json({
-                        messaga: 'Usuário ou senha inválidos!'
+                        message: 'Usuário ou senha inválidos!'
                     })
                 }
 

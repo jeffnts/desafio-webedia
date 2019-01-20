@@ -1,110 +1,137 @@
 import authorModel from '../models/authorModel'
 import articleModel from '../models/articleModel'
 
+import {redisClient} from '../config/server'
+
 module.exports = {
-    create: async (req, res) =>{
-        try {
-            await authorModel.create(req.body)
-            
-            return res.status(201).json({
-                message: 'Autor criado com sucesso!'
-            }) 
-        } catch (error) {
-            return res.status(500).json({
-                message: 'Erro no servidor ao tentar cadastrar o autor.',
-                error
-              })
+  create: async (req, res) =>{
+    try {
+      await authorModel.create(req.body)
+
+      return res.status(201).json({
+        message: 'Autor criado com sucesso!'
+      })
+    } catch (error) {
+      return res.status(500).json({
+        message: 'Erro no servidor ao tentar cadastrar o autor.',
+        error
+      })
+    }
+  },
+  list: async (req, res) =>{
+
+    try {
+      const {offset, limit} = req.query
+
+      redisClient.get(`cacheAuthors${offset}${limit}`, async (err, result) => {
+        if (result) {
+          const resultJSON = JSON.parse(result)
+          res.status(200).json({authors: resultJSON})
+        } else {
+          const authors = await authorModel.paginate({}, {offset: parseInt(offset), limit: parseInt(limit)})
+          console.log(authors)
+          redisClient.set(`cacheAuthors${offset}${limit}`, JSON.stringify(authors))
+          redisClient.expire(`cacheAuthors${offset}${limit}`, 50)
+
+          return res.status(200).json({authors})
         }
-    },
-    list: async (req, res) =>{
+      })
 
-        try {
-            const {offset, limit} = req.query
+    } catch (error) {
+      return res.status(500).json({
+        message: 'Erro no servidor ao tentar listar o autor.',
+        error: error.message
+      })
+    }
 
-            const authors = await authorModel.paginate({}, {offset: parseInt(offset), limit: parseInt(limit)})
+  },
+  show: async (req, res) =>{
+    try {
+      const{id} = req.params
 
-            return res.status(200).json({
-                authors
+      redisClient.get(`authorCache${id}`, async (err, result) => {
+        if(result){
+          const resultJSON = JSON.parse(result)
+          res.status(200).json({author: resultJSON})
+        }
+        else{
+          const author = await authorModel.findById(id)
+
+          if(author === null){
+            res.status(404).json({
+              message: 'Este autor não existe.'
             })
-            
-        } catch (error) {
-            return res.status(500).json({
-                message: 'Erro no servidor ao tentar listar o autor.',
-                error: error.message
-              })
+          }
+
+          redisClient.set(`authorCache${id}`, JSON.stringify(author))
+          redisClient.expire(`authorCache${id}`, 50)
+
+          return res.status(200).json({author})
+
         }
-    },
-    show: async (req, res) =>{
-        try {
-            const{id} = req.params
+      })
 
-            const author = await authorModel.findById(id)
 
-            if(author === null){
-                res.status(404).json({
-                    message: 'Este autor não existe.'
-                })
-            }
 
-            return res.status(200).json({author})            
-        } catch (error) {
-            return res.status(500).json({
-                message: 'Erro no servidor ao tentar listar os autores.',
-                error: error.message
-              })
-        }
-    },
-    update: async (req, res) =>{
-        try {
-            const{id} = req.params
-            
-            const author = await authorModel.findByIdAndUpdate(id, req.body)
 
-            if(author === null){
-                res.status(404).json({
-                    message: 'Este autor não existe.'
-                })
-            }
-            
-            return res.status(200).json({
-                message: 'Autor atualizado com sucesso!'
-            })
-        } catch (error) {
-            return res.status(500).json({
-                message: 'Erro no servidor ao tentar atualizar o autor.',
-                error: error.message
-              }) 
-        }
-    },
-    remove: async (req, res) =>{
-        try {
-            const{id} = req.params
+    } catch (error) {
+      return res.status(500).json({
+        message: 'Erro no servidor ao tentar listar os autores.',
+        error: error.message
+      })
+    }
+  },
+  update: async (req, res) =>{
+    try {
+      const{id} = req.params
 
-            const author = await authorModel.findById(id)
-            
-            if(author === null){
-                res.status(404).json({
-                    message: 'Este autor não existe.'
-                })
-            }
+      const author = await authorModel.findByIdAndUpdate(id, req.body)
 
-            const articles = await articleModel.find().where({authors: id})
-            
-            author.remove()
+      if(author === null){
+        res.status(404).json({
+          message: 'Este autor não existe.'
+        })
+      }
 
-            //Removing the author reference from the article            
-            articles.forEach(article =>{
-                article.authors.remove(author)
-            })            
+      return res.status(200).json({
+        message: 'Autor atualizado com sucesso!'
+      })
+    } catch (error) {
+      return res.status(500).json({
+        message: 'Erro no servidor ao tentar atualizar o autor.',
+        error: error.message
+      })
+    }
+  },
+  remove: async (req, res) =>{
+    try {
+      const{id} = req.params
 
-            return res.status(200).json({
-                message: 'Autor removido com sucesso!' 
-            })
-        } catch (error) {
-            return res.status(500).json({
-                message: 'Erro no servidor ao tentar remover o autor.',
-                error: error.message
-              }) 
-        }
-    },
+      const author = await authorModel.findById(id)
+
+      if(author === null){
+        res.status(404).json({
+          message: 'Este autor não existe.'
+        })
+      }
+
+      const articles = await articleModel.find().where({authors: id})
+
+      author.remove()
+
+      //Removing the author reference from the article
+      articles.forEach(article =>{
+        article.authors.remove(author)
+      })
+
+      return res.status(200).json({
+        message: 'Autor removido com sucesso!'
+      })
+    } catch (error) {
+      return res.status(500).json({
+        message: 'Erro no servidor ao tentar remover o autor.',
+        error: error.message
+      })
+    }
+  },
 }

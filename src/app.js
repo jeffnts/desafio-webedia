@@ -10,9 +10,10 @@ import bodyParser from 'body-parser'
 
 const app = express()
 
-redisConnection()
 
 databaseConnection()
+
+redisConnection()
 
 if(!module.parent) initServer(app, 4000) 
 

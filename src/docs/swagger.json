@@ -211,7 +211,7 @@
         }
       }
     },
-    "/author" : {
+    "/authors" : {
       "get" : {
         "tags" : [ "Autores" ],
         "summary" : "Retorna todos os autores cadastrados do blog.",
@@ -272,7 +272,7 @@
         }
       }
     },
-    "/author/{id}" : {
+    "/authors/{id}" : {
       "get" : {
         "tags" : [ "Autores" ],
         "summary" : "Retorna o autor de acordo com o ID passado como parâmetro.",
@@ -448,7 +448,7 @@
         }
       }
     },
-    "/article/{permalink}" : {
+    "/articles/{permalink}" : {
       "get" : {
         "tags" : [ "Artigos" ],
         "summary" : "Retorna o artigo de acordo com o permalink passado como parâmetro.",
@@ -584,6 +584,12 @@
         "responses" : {
           "200" : {
             "description" : "OK",
+            "schema" : {
+              "$ref" : "#/definitions/Comments"
+            }
+          },
+          "404" : {
+            "description" : "Este artigo não existe.",
             "schema" : {
               "$ref" : "#/definitions/Comments"
             }

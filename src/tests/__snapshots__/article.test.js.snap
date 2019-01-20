@@ -1,73 +1,38 @@
 // Jest Snapshot v1, https://goo.gl/fbAQLP
 
+exports[`Article tests POST method It should create a new article. 1`] = `
+Object {
+  "message": "Artigo criado com sucesso!",
+}
+`;
+
 exports[`Article tests POST method It should create a new author. 1`] = `
 Object {
-  "error": Object {
-    "_message": "Author validation failed",
-    "errors": Object {
-      "name": Object {
-        "kind": "required",
-        "message": "Path \`name\` is required.",
-        "name": "ValidatorError",
-        "path": "name",
-        "properties": Object {
-          "message": "Path \`name\` is required.",
-          "path": "name",
-          "type": "required",
-        },
-      },
-    },
-    "message": "Author validation failed: name: Path \`name\` is required.",
-    "name": "ValidationError",
-  },
-  "message": "Erro no servidor ao tentar cadastrar o autor.",
+  "message": "Este autor não existe.",
+}
+`;
+
+exports[`Article tests POST method It should not create a article with a inexistent author. 1`] = `
+Object {
+  "error": "Cast to ObjectId failed for value \\"TEST\\" at path \\"_id\\" for model \\"Author\\"",
+  "message": "Erro no servidor ao tentar cadastrar o artigo.",
 }
 `;
 
 exports[`Article tests POST method It should not create a author with a inexistent author. 1`] = `
 Object {
-  "error": Object {
-    "_message": "Author validation failed",
-    "errors": Object {
-      "name": Object {
-        "kind": "required",
-        "message": "Path \`name\` is required.",
-        "name": "ValidatorError",
-        "path": "name",
-        "properties": Object {
-          "message": "Path \`name\` is required.",
-          "path": "name",
-          "type": "required",
-        },
-      },
-    },
-    "message": "Author validation failed: name: Path \`name\` is required.",
-    "name": "ValidationError",
-  },
-  "message": "Erro no servidor ao tentar cadastrar o autor.",
+  "message": "Este autor não existe.",
+}
+`;
+
+exports[`Article tests POST method It should not create a author with a inexistent author. 2`] = `
+Object {
+  "message": "Este autor não existe.",
 }
 `;
 
 exports[`Article tests POST method It should not create a author without a  author. 1`] = `
 Object {
-  "error": Object {
-    "_message": "Author validation failed",
-    "errors": Object {
-      "name": Object {
-        "kind": "required",
-        "message": "Path \`name\` is required.",
-        "name": "ValidatorError",
-        "path": "name",
-        "properties": Object {
-          "message": "Path \`name\` is required.",
-          "path": "name",
-          "type": "required",
-        },
-      },
-    },
-    "message": "Author validation failed: name: Path \`name\` is required.",
-    "name": "ValidationError",
-  },
-  "message": "Erro no servidor ao tentar cadastrar o autor.",
+  "message": "Este autor não existe.",
 }
 `;

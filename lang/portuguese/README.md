@@ -1,6 +1,6 @@
-##### Languages: [Portuguese](), [English]()
+##### Idiomas: [Português](), [Inglês]()
 
-# Instructions
+# Instruções
 <hr />
 <!-- 
 ## Conteúdo
@@ -11,50 +11,50 @@
 5. [Estrutura do projeto](#estrutura-do-projeto)
 6. [Deploy](#deploy) -->
 
-## 1. Description 
-API that consist in a blog back-end based on the REST architecture as the part of selection process of the [web**edia**](http://www.webedia.com.br/).
+## 1. Descrição 
+API que consiste no back-end de um blog, feita utilizando o modelo arquitetural REST, como parte do processo de seleção da [web**edia**](http://www.webedia.com.br/).
 
 
 
-## 2. Requirements
-### In case you don't use Docker:
-- Coffee ☕️
+## 2. Pré requisitos
+### Caso não use Docker:
+- Café ☕️
 - [Git](https://git-scm.com/downloads)
-- [NodeJs](https://nodejs.org/en/) - Version 10+
+- [NodeJs](https://nodejs.org/en/) - Versão 10+
 - [MongoDB](https://www.mongodb.com/download-center/community)
 - [Redis](https://redis.io/download)
 
-### In case you use Docker:
-- Coffee ☕️
+### Caso use Docker:
+- Café ☕️
 - [Git](https://git-scm.com/downloads)
-- [NodeJs](https://nodejs.org/en/) - Version 10+
+- [NodeJs](https://nodejs.org/en/) - Versão 10+
 - [Docker](https://www.docker.com/products/docker-desktop)
 
-### Sit down, relax, get you coffee and here we go!
+### Sente-se confortavelmente, pegue sua xícara de café e vamos nessa!
 
-## 3. Instalation
-1. Clone the project to your computer:
+## 3. Instalação
+1. Clone o projeto para sua máquina local:
 ```shell
 git clone https://github.com/jeffnts/desafio-webedia.git
 ```
 
-2. Enter in the project folder:
+2. Entre na pasta do projeto:
 ```shell
 cd desafio-webedia
 ```
 
-3. Install de dependences by typing the command:
+3. Instale as dependências através do comando:
 ```shell
 npm install
 ```
-4. Set the environment variables:
- Within the project is going a file ***.env*** with this variables defined. 
+4. Defina as Variáveis de Ambiente:
+Junto com o projeto, na raiz do mesmo, já se encontra um arquivo ***.env*** com essas variáveis definidas.
 ```
-URL_DB_PRODUCTION = MongoDB URL connection (Production)
-URL_DB_DEVELOPMENT = MongoDB URL connection (Development)
-URL_DB_TESTS = MongoDB URL connection (Tests)
-SECRET_KEY = Secret Key to protect the application through the JWT
-URL_SWAGGER = Swagger UI URL, by default, for local development: localhost:4000
+URL_DB_PRODUCTION = URL de conexão do MongoDB (Produção)
+URL_DB_DEVELOPMENT = URL de conexão do MongoDB (Desenvolvimento)
+URL_DB_TESTS = URL de conexão do MongoDB (Testes)
+SECRET_KEY = Chave Secreta para proteger a Autenticação através do JWT
+URL_SWAGGER = URL do Swagger UI, por padrão para desenvolvimento local: localhost:4000
 ```
 
 ## 4. Execução

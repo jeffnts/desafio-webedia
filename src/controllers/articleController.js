@@ -2,6 +2,8 @@ import articleModel from '../models/articleModel'
 import authorModel from '../models/authorModel'
 import commentsModel from '../models/commentsModel'
 
+import {redisClient} from '../config/server'
+
 module.exports = {
     create: async (req, res) =>{
         try {
@@ -37,19 +39,34 @@ module.exports = {
         try {
             const {offset, limit} = req.query
 
-            const articles = await articleModel.paginate({}, {offset: parseInt(offset), limit: parseInt(limit), populate: ['authors', 'comments']}) 
-            
-            //Omitting the User Id 
-            articles.docs.forEach(elements =>{
-                for(let i = 0; i < elements.comments.length; i++){
-                    elements.comments[i].user = undefined
+            redisClient.get(`cacheArticles${offset}${limit}`, async (err, result) =>{
+                if(result){
+                  const resultJSON = JSON.parse(result)
+
+                  //Omitting the User Id
+                  resultJSON.docs.forEach(elements =>{
+                    for(let i = 0; i < elements.comments.length; i++){
+                      elements.comments[i].user = undefined
+                    }
+                  })
+
+                  res.status(200).json({articles: resultJSON})
+                }else{
+                    const articles = await articleModel.paginate({}, {offset: parseInt(offset), limit: parseInt(limit), populate: ['authors', 'comments']})
+
+                    redisClient.set(`cacheArticles${offset}${limit}`, JSON.stringify(articles))
+                    redisClient.expire(`cacheArticles${offset}${limit}`, 50)
+
+                    //Omitting the User Id
+                     articles.docs.forEach(elements =>{
+                        for(let i = 0; i < elements.comments.length; i++){
+                          elements.comments[i].user = undefined
+                         }
+                    })
+
+                  return res.status(200).json( {articles} )
                 }
-                
             })
-
-            
-
-            return res.status(200).json( {articles} )
             
         } catch (error) {
             return res.status(500).json({
@@ -62,20 +79,38 @@ module.exports = {
         try {
             const {permalink} = req.params
 
-            const article = await articleModel.findOne({permalink}).populate('authors').populate('comments')
-          
-            if(article === null){
-                res.status(404).json({
-                    message: 'Este artigo não existe.'
-                })
-            }
-        
-            //Omitting the User Id 
-            for (let i = 0; i < article.comments.length; i++){
-                article.comments[i].user = undefined                            
-            }
-            
-            return res.status(200).json({article})
+            redisClient.get(`article${permalink}`, async (err, result) =>{
+                if(result){
+                    const resultJSON = JSON.parse(result)
+
+                    //Omitting the User Id
+                    for (let i = 0; i < resultJSON.comments.length; i++){
+                        resultJSON.comments[i].user = undefined
+                    }
+
+                    res.status(200).json({article: resultJSON})
+                    }else{
+                        const article = await articleModel.findOne({permalink}).populate('authors').populate('comments')
+
+                        if(article === null){
+                            res.status(404).json({
+                            message: 'Este artigo não existe.'
+                            })
+                        }
+
+                        //Omitting the User Id
+                        for (let i = 0; i < article.comments.length; i++){
+                            article.comments[i].user = undefined
+                        }
+
+                        redisClient.set(`articleCache${permalink}`, JSON.stringify(article))
+                        redisClient.expire(`articleCache${permalink}`, 50)
+
+                        return res.status(200).json({article})
+                    }
+            })
+
+
         } catch (error) {
             return res.status(500).json({
                 message: 'Erro no servidor ao tentar listar o artigo.',

@@ -2,6 +2,8 @@ import commentsModel from '../models/commentsModel'
 import articleModel from '../models/articleModel'
 import userModel from '../models/userModel'
 
+import {redisClient} from '../config/server'
+
 import jwt from 'jsonwebtoken'
 
 
@@ -12,6 +14,7 @@ module.exports ={
             const { id } = await jwt.verify(token.trim(), process.env.SECRET_KEY)
 
             const user = await userModel.findById(id)
+
             
             const {permalink} = req.params
             const article = await articleModel.findOne({permalink})
@@ -51,11 +54,27 @@ module.exports ={
             const{offset, limit} = req.query
 
             const user = await userModel.findById(id)
-            const article = await articleModel.findOne({permalink})            
-          
-            const comments = await commentsModel.paginate({user, article}, {offset: parseInt(offset), limit: parseInt(limit)})
+            const article = await articleModel.findOne({permalink})
 
-            return res.status(200).json({comments})            
+            if(article === null){
+              res.status(404).json({message: 'Este artigo não existe.'})
+            }
+
+            redisClient.get(`commentsCache${user}${article}${offset}${limit}`, async (err, result)=>{
+                if(result){
+                  const resultJSON = JSON.parse(result)
+
+                  res.status(200).json({comments: resultJSON})
+                }else{
+                    const comments = await commentsModel.paginate({user, article}, {offset: parseInt(offset), limit: parseInt(limit)})
+
+                    redisClient.set(`commentsCache${user}${article}${offset}${limit}`, JSON.stringify(comments))
+                    redisClient.expire(`commentsCache${user}${article}${offset}${limit}`, 50)
+
+                    return res.status(200).json({comments})
+                }
+            })
+
         } catch (error) {
             return res.status(500).json({
                 message: 'Erro no servidor ao tentar listar os comentários.',
