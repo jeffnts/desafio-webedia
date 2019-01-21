@@ -1,41 +1,20 @@
 // Jest Snapshot v1, https://goo.gl/fbAQLP
 
-exports[`Author tests DELETE method It should delete the author according the id passed as parameter 1`] = `
-Object {
-  "message": "Autor removido com sucesso!",
-}
-`;
-
 exports[`Author tests DELETE method It should not delete the author with the wrong id passed as parameter 1`] = `
 Object {
   "message": "Este autor não existe.",
 }
 `;
 
-exports[`Author tests GET method It shoul return all authors 1`] = `
+exports[`Author tests DELETE method It should not delete the author with the wrong id passed as parameter 2`] = `
 Object {
-  "authors": Object {
-    "docs": Array [
-      Object {
-        "__v": 0,
-        "_id": "ObjectId",
-        "name": "Monteiro Lobato",
-      },
-    ],
-    "limit": "EMPTY",
-    "offset": "EMPTY",
-    "totalDocs": 1,
-  },
+  "message": "Este autor não existe.",
 }
 `;
 
-exports[`Author tests GET method It should return the authors according the id passed as parameter 1`] = `
+exports[`Author tests GET method It should not return the authors with the wrong the id passed as parameter 1`] = `
 Object {
-  "author": Object {
-    "__v": 0,
-    "_id": "ObjectId",
-    "name": "Monteiro Lobato",
-  },
+  "message": "Este autor não existe.",
 }
 `;
 
@@ -47,6 +26,6 @@ Object {
 
 exports[`Author tests PUT method It should update the author according the id passed as parameter 1`] = `
 Object {
-  "message": "Este autor não existe.",
+  "message": "Autor atualizado com sucesso!",
 }
 `;

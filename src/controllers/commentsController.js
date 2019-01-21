@@ -34,7 +34,12 @@ module.exports ={
             article.comments.push(comment)
             article.save()
 
-           
+            //Deleting cache
+            redisClient.keys("cacheComments*", function(err, rows) {
+                rows.forEach(key =>{
+                redisClient.del(key)
+                })
+            })
             return res.status(201).json({
                 message: 'Comentário cadastrado com sucesso!'
             })
@@ -60,7 +65,7 @@ module.exports ={
               res.status(404).json({message: 'Este artigo não existe.'})
             }
 
-            redisClient.get(`commentsCache${user}${article}${offset}${limit}`, async (err, result)=>{
+            redisClient.get(`cacheComments${user}${article}${offset}${limit}`, async (err, result)=>{
                 if(result){
                   const resultJSON = JSON.parse(result)
 
@@ -68,10 +73,10 @@ module.exports ={
                 }else{
                     const comments = await commentsModel.paginate({user, article}, {offset: parseInt(offset), limit: parseInt(limit)})
 
-                    redisClient.set(`commentsCache${user._id}${article._id}${offset}${limit}`, JSON.stringify(comments))
-                    redisClient.expire(`commentsCache${user._id}${article._id}${offset}${limit}`, 50)
+                    redisClient.set(`cacheComments${user._id}${article._id}${offset}${limit}`, JSON.stringify(comments))
+                    redisClient.expire(`cacheComments${user._id}${article._id}${offset}${limit}`, 50)
 
-                    return res.status(200).json({comments})
+                    res.status(200).json({comments})
                 }
             })
 
@@ -109,7 +114,14 @@ module.exports ={
 
             await comment.set(req.body)
             await comment.save()
-            
+
+            //Deleting cache
+            redisClient.keys("cacheComments*", function(err, rows) {
+                rows.forEach(key =>{
+                redisClient.del(key)
+                })
+            })
+
             return res.status(200).json({
                 message: 'Comentário atualizado com sucesso!'
             })
@@ -147,7 +159,14 @@ module.exports ={
             await comment.remove()
             article.comments.remove(comment)
             article.save()
-            
+
+            //Deleting cache
+            redisClient.keys("cacheComments*", function(err, rows) {
+                rows.forEach(key =>{
+                redisClient.del(key)
+                })
+            })
+
             return res.status(200).json({
                 message: 'Comentário removido com sucesso!',
                              

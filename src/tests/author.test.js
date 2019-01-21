@@ -11,7 +11,8 @@ beforeAll(() => {
 })
     
 afterAll(() => {
-connection.disconect()
+    dropCollection()
+    connection.disconect()
 })
 
 let author = {
@@ -42,7 +43,7 @@ describe('Author tests', () =>{
       expect(res.statusCode).toBe(200)
     })
     test('It should not return the authors with the wrong the id passed as parameter', async () =>{
-      const res = await request.get('/api/authors/TESTOBJECT02')
+      const res = await request.get(`/api/authors/TESTOBJECT02`)
       expect(sanitizeTestObject(res.body)).toMatchSnapshot()
       expect(res.statusCode).toBe(404)
     })
@@ -55,7 +56,7 @@ describe('Author tests', () =>{
       expect(res.statusCode).toBe(200)
     })
     test('It should not update the author with the wrong id passed as parameter', async () =>{
-      const res = await request.put('/api/authors/TESTOBJECT02').send({name: 'Zé do Livro'})
+      const res = await request.put(`/api/authors/TESTOBJECT02`).send({name: 'Zé do Livro'})
       expect(sanitizeTestObject(res.body)).toMatchSnapshot()
       expect(res.statusCode).toBe(404)
     })

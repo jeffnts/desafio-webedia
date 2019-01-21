@@ -1,0 +1,19 @@
+// Jest Snapshot v1, https://goo.gl/fbAQLP
+
+exports[`Auth tests It should authenticate the user when it is passed the correct userName and password 1`] = `
+Object {
+  "token": "FROZEN-TOKEN",
+}
+`;
+
+exports[`Auth tests It should not authenticate the user when it is passed the wrong password 1`] = `
+Object {
+  "message": "Nome de Usuário e Senha são obrigatórios.",
+}
+`;
+
+exports[`Auth tests It should not authenticate the user when it is passed the wrong userName  1`] = `
+Object {
+  "message": "Usuário ou senha inválidos!",
+}
+`;

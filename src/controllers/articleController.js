@@ -24,6 +24,14 @@ module.exports = {
             }
 
             await articleModel.create(req.body)
+
+            //Deleting cache
+            redisClient.keys("cacheArticles*", function(err, rows) {
+                rows.forEach(key =>{
+                redisClient.del(key)
+                })
+            })
+
             return res.status(201).json({
                 message: 'Artigo criado com sucesso!'
             })
@@ -64,7 +72,7 @@ module.exports = {
                          }
                     })
 
-                  return res.status(200).json( {articles} )
+                    res.status(200).json({articles})
                 }
             })
             
@@ -103,10 +111,10 @@ module.exports = {
                             article.comments[i].user = undefined
                         }
 
-                        redisClient.set(`articleCache${permalink}`, JSON.stringify(article))
-                        redisClient.expire(`articleCache${permalink}`, 50)
+                        redisClient.set(`cacheArticle${permalink}`, JSON.stringify(article))
+                        redisClient.expire(`cacheArticle${permalink}`, 50)
 
-                        return res.status(200).json({article})
+                        res.status(200).json({article})
                     }
             })
 
@@ -133,9 +141,11 @@ module.exports = {
             await article.set(req.body)
             await article.set({updateDate: Date.now()})
             await article.save()
-               
+
+            redisClient.set(`cacheArticle${permalink}`)
+
             return res.status(200).json({
-                message: 'Artigo atualizado com sucesso!'
+                 message: 'Artigo atualizado com sucesso!'
             })
         } catch (error) {
             return res.status(500).json({
@@ -162,9 +172,17 @@ module.exports = {
             //Removing all comments
             comments.forEach(comment => {
                 comment.remove()
-            })            
+            })
 
-            return res.status(200).json({
+          redisClient.del(`cacheArticle${permalink}`)
+          redisClient.keys("cacheArticles*", function(err, rows) {
+            rows.forEach(key =>{
+              redisClient.del(key)
+            })
+          })
+
+
+          return res.status(200).json({
                 message: 'Artigo deletado com sucesso!'
             })
         } catch (error) {

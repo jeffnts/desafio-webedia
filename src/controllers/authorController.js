@@ -8,6 +8,15 @@ module.exports = {
     try {
       await authorModel.create(req.body)
 
+      //Deleting cache
+      redisClient.keys("cacheAuthors*", function(err, rows) {
+        rows.forEach(key =>{
+          redisClient.del(key)
+        })
+      })
+
+
+
       return res.status(201).json({
         message: 'Autor criado com sucesso!'
       })
@@ -29,11 +38,11 @@ module.exports = {
           res.status(200).json({authors: resultJSON})
         } else {
           const authors = await authorModel.paginate({}, {offset: parseInt(offset), limit: parseInt(limit)})
-          console.log(authors)
+
           redisClient.set(`cacheAuthors${offset}${limit}`, JSON.stringify(authors))
           redisClient.expire(`cacheAuthors${offset}${limit}`, 50)
 
-          return res.status(200).json({authors})
+          res.status(200).json({authors})
         }
       })
 
@@ -49,7 +58,7 @@ module.exports = {
     try {
       const{id} = req.params
 
-      redisClient.get(`authorCache${id}`, async (err, result) => {
+      redisClient.get(`caheAuthor${id}`, async (err, result) => {
         if(result){
           const resultJSON = JSON.parse(result)
           res.status(200).json({author: resultJSON})
@@ -63,11 +72,10 @@ module.exports = {
             })
           }
 
-          redisClient.set(`authorCache${id}`, JSON.stringify(author))
-          redisClient.expire(`authorCache${id}`, 50)
+          redisClient.set(`caheAuthor${id}`, JSON.stringify(author))
+          redisClient.expire(`caheAuthor${id}`, 50)
 
-          return res.status(200).json({author})
-
+          res.status(200).json({author})
         }
       })
 
@@ -92,6 +100,8 @@ module.exports = {
           message: 'Este autor não existe.'
         })
       }
+
+      redisClient.set(`cacheAuthor${id}`)
 
       return res.status(200).json({
         message: 'Autor atualizado com sucesso!'
@@ -118,6 +128,13 @@ module.exports = {
       const articles = await articleModel.find().where({authors: id})
 
       author.remove()
+
+      redisClient.del(`caheAuthor${id}`)
+      redisClient.keys("cacheAuthors*", function(err, rows) {
+        rows.forEach(key =>{
+          redisClient.del(key)
+        })
+      })
 
       //Removing the author reference from the article
       articles.forEach(article =>{
