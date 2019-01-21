@@ -1,4 +1,4 @@
-##### Languages: [Portuguese](), [English]()
+##### Idiomas: [Português](https://github.com/jeffnts/desafio-webedia/tree/master/lang/portuguese), [Inglês](https://github.com/jeffnts/desafio-webedia)
 
 # Instructions
 <hr />
