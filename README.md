@@ -102,8 +102,8 @@ npm run docker:dev
    - 📁tests 
 - 📁lang 
 ```
-### Descrição:
-|Pasta|Descrição|
+### Description:
+|Folder|Description|
 |-----|------|
 📁src |  Application source code
 📁config | Where the application settings lays
