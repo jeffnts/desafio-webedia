@@ -68,8 +68,8 @@ module.exports ={
                 }else{
                     const comments = await commentsModel.paginate({user, article}, {offset: parseInt(offset), limit: parseInt(limit)})
 
-                    redisClient.set(`commentsCache${user}${article}${offset}${limit}`, JSON.stringify(comments))
-                    redisClient.expire(`commentsCache${user}${article}${offset}${limit}`, 50)
+                    redisClient.set(`commentsCache${user._id}${article._id}${offset}${limit}`, JSON.stringify(comments))
+                    redisClient.expire(`commentsCache${user._id}${article._id}${offset}${limit}`, 50)
 
                     return res.status(200).json({comments})
                 }

@@ -53,6 +53,7 @@ Junto com o projeto, na raiz do mesmo, já se encontra um arquivo ***.env*** com
 URL_DB_PRODUCTION = URL de conexão do MongoDB (Produção)
 URL_DB_DEVELOPMENT = URL de conexão do MongoDB (Desenvolvimento)
 URL_DB_TESTS = URL de conexão do MongoDB (Testes)
+REDIS_HOST = Por padrão, localhost se não estiver usando docker, redis se estiver usando docker 
 SECRET_KEY = Chave Secreta para proteger a Autenticação através do JWT
 URL_SWAGGER = URL do Swagger UI, por padrão para desenvolvimento local: localhost:4000
 ```
@@ -64,7 +65,7 @@ URL_SWAGGER = URL do Swagger UI, por padrão para desenvolvimento local: localho
 mongod
 ```
 
-2. Após o mongo está rodando, execute o comando para executar a aplicação:
+2. Após o MongoDB estiver rodando, execute o seguinte comando para iniciar a aplicação:
 ```shell
 npm start
 ```
@@ -83,7 +84,7 @@ npm run docker:dev:build
 npm run docker:dev
 ```
 
-## 5. Estrutura do projeto
+## 5. Estrutura do Projeto
 
 ```
 - 📂src  
@@ -110,7 +111,7 @@ npm run docker:dev
 📁config > 📁server | Configurações do Servidor
 📁config > 📁tests | Configurações dos Testes
 📁controllers | Pasta onde se encontra a lógica da aplicação
-📁middlewares | Onde está todos os middlewares, incluindo a autenticação, não sabe o que é middleware, [veja aqui](https://www.redhat.com/pt-br/topics/middleware/what-is-middleware)  
+📁middlewares | Onde está todos os middlewares, incluindo a autenticação. Não sabe o que é middleware? [Veja aqui](https://www.redhat.com/pt-br/topics/middleware/what-is-middleware)  
 📁docs | Documentação das rotas da api, para editá-la use o [Swagger Editor](https://editor.swagger.io/)
 📁auth | Autenticação do sistema
 📁auth > 📁tests | Testes relativos à autenticação
@@ -133,7 +134,7 @@ npm run docker:dev
 |POST | /api/user|Cadastra um Usuário|
 |GET | /api/user|Retorna o Usuário que está autenticado|Usuário precisa estar autenticado|
 |PUT | /api/user|Edita o Usuário que está autenticado|Usuário precisa estar autenticado|
-|DELETE | /api/user|Retorna o Usuário que está autenticado|Usuário precisa estar autenticado|
+|DELETE | /api/user|Deleta o Usuário que está autenticado|Usuário precisa estar autenticado|
 
 ##### Autor
 |Verbo | Caminho|Descrição |
@@ -158,7 +159,7 @@ npm run docker:dev
 ##### Comentários
 |Verbo | Caminho|Descrição |Observações|
 |------|--------|----------|-----------|
-|POST | /comments/:permalink|Cadastra um Comentário|Usuário precisa estar autenticado|
+|POST | /comments/:permalink|Cadastra um Comentário em um Artigo|Usuário precisa estar autenticado|
 |GET | /comments/:permalink|Retorna todos os Comentários de um Artigo|Usuário precisa estar autenticado|
 |GET | /comments/:permalink?offset&limit|Retorna todos os Comentários de um Artigo segundo a busca pelos parâmetros da query|Usuário precisa estar autenticado|
 |PUT | /comments/:commentId/:permalink|Edita um Comentário de um Artigo|Usuário precisa estar autenticado|
@@ -172,7 +173,7 @@ Após sua aplicação estiver rodando vá em http://localhost:4000
 ## 6. Deploy
 Use estes scripts para gerar uma pasta pronta para produção e implantação do blog.
 
->Comando que irá gerar uma pasta com o nome build/, lá conterá todo código do >blog pronto para que seja implantado em um servidor.
+>Comando que irá gerar uma pasta com o nome build/, lá conterá todo código do blog pronto para que seja implantado em um servidor.
 >```shell
 >npm run build
 >```
