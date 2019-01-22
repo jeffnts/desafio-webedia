@@ -95,7 +95,7 @@ module.exports = {
 
       const author = await authorModel.findByIdAndUpdate(id, req.body)
 
-      if(author === null){
+      if(await author === null){
         res.status(404).json({
           message: 'Este autor não existe.'
         })
@@ -124,9 +124,9 @@ module.exports = {
       const{id} = req.params
 
       const author = await authorModel.findById(id)
-
+      console.log(author)
       if(author === null){
-        res.status(404).json({
+        return res.status(404).json({
           message: 'Este autor não existe.'
         })
       }

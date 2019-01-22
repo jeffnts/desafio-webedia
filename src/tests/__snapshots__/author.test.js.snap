@@ -1,18 +1,6 @@
 // Jest Snapshot v1, https://goo.gl/fbAQLP
 
-exports[`Author tests DELETE method It should delete the author according the id passed as parameter 1`] = `
-Object {
-  "message": "Autor removido com sucesso!",
-}
-`;
-
 exports[`Author tests DELETE method It should not delete the author with the wrong id passed as parameter 1`] = `
-Object {
-  "message": "Este autor não existe.",
-}
-`;
-
-exports[`Author tests DELETE method It should not delete the author with the wrong id passed as parameter 2`] = `
 Object {
   "message": "Este autor não existe.",
 }

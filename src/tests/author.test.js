@@ -56,7 +56,7 @@ describe('Author tests', () =>{
       expect(res.statusCode).toBe(200)
     })
     test('It should not update the author with the wrong id passed as parameter', async () =>{
-      const res = await request.put(`/api/authors/TESTOBJECT02`).send({name: 'Zé do Livro'})
+      const res = await request.put(`/api/authors/TESTOBJECT02`).send({name: 'Jõao'})
       expect(sanitizeTestObject(res.body)).toMatchSnapshot()
       expect(res.statusCode).toBe(404)
     })

@@ -58,7 +58,7 @@ module.exports = {
                     }
                   })
 
-                  res.status(200).json({articles: resultJSON})
+                  return res.status(200).json({articles: resultJSON})
                 }else{
                     const articles = await articleModel.paginate({}, {offset: parseInt(offset), limit: parseInt(limit), populate: ['authors', 'comments']})
 
@@ -72,7 +72,7 @@ module.exports = {
                          }
                     })
 
-                    res.status(200).json({articles})
+                    return res.status(200).json({articles})
                 }
             })
             
@@ -96,7 +96,7 @@ module.exports = {
                         resultJSON.comments[i].user = undefined
                     }
 
-                    res.status(200).json({article: resultJSON})
+                    return res.status(200).json({article: resultJSON})
                     }else{
                         const article = await articleModel.findOne({permalink}).populate('authors').populate('comments')
 
@@ -114,7 +114,7 @@ module.exports = {
                         redisClient.set(`cacheArticle${permalink}`, JSON.stringify(article))
                         redisClient.expire(`cacheArticle${permalink}`, 50)
 
-                        res.status(200).json({article})
+                        return res.status(200).json({article})
                     }
             })
 

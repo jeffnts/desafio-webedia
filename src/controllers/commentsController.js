@@ -20,7 +20,7 @@ module.exports ={
             const article = await articleModel.findOne({permalink})
            
             if(article === null){
-                res.status(404).json({
+                return res.status(404).json({
                     message: 'Artigo não encontrado'
                 })
             }
@@ -62,21 +62,21 @@ module.exports ={
             const article = await articleModel.findOne({permalink})
 
             if(article === null){
-              res.status(404).json({message: 'Este artigo não existe.'})
+              return res.status(404).json({message: 'Este artigo não existe.'})
             }
 
             redisClient.get(`cacheComments${user}${article}${offset}${limit}`, async (err, result)=>{
                 if(result){
                   const resultJSON = JSON.parse(result)
 
-                  res.status(200).json({comments: resultJSON})
+                  return res.status(200).json({comments: resultJSON})
                 }else{
                     const comments = await commentsModel.paginate({user, article}, {offset: parseInt(offset), limit: parseInt(limit)})
 
                     redisClient.set(`cacheComments${user._id}${article._id}${offset}${limit}`, JSON.stringify(comments))
                     redisClient.expire(`cacheComments${user._id}${article._id}${offset}${limit}`, 50)
 
-                    res.status(200).json({comments})
+                    return res.status(200).json({comments})
                 }
             })
 

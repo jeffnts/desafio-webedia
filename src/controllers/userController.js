@@ -36,7 +36,7 @@ module.exports = {
             const user = await userModel.findById(id)
 
             if(!user){
-                res.status(404).json({
+                return res.status(404).json({
                     message: 'Usuário não encontrado!'
                 })
             }
@@ -58,7 +58,7 @@ module.exports = {
             const user = await userModel.findById(id)
 
             if(!user){
-                res.status(404).json({
+                return res.status(404).json({
                     message: 'Usuário não encontrado!'
                 })
             }
@@ -85,7 +85,7 @@ module.exports = {
             const user = await userModel.findById(id)
 
             if(!user){
-                res.status(404).json({
+                return res.status(404).json({
                     message: 'Usuário não encontrado!'
                 })
             }
