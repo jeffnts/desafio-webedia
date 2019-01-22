@@ -9,7 +9,7 @@ module.exports = {
         try {
             const {authors} = req.body
 
-            if( await !authors){
+            if(!authors){
                 return res.status(406).json({
                     message: 'É obrigatório um artigo ter autor!'
                 })
@@ -17,7 +17,7 @@ module.exports = {
 
             const author = await authorModel.findById(authors)
 
-            if(author === null){
+            if(!author){
                 return res.status(404).json({
                     message: 'Este autor não existe.'
                 })
@@ -65,12 +65,14 @@ module.exports = {
                     redisClient.set(`cacheArticles${offset}${limit}`, JSON.stringify(articles))
                     redisClient.expire(`cacheArticles${offset}${limit}`, 50)
 
-                    //Omitting the User Id
-                     articles.docs.forEach(elements =>{
+                    if(articles.docs.comments){
+                      //Omitting the User Id
+                      articles.docs.forEach(elements =>{
                         for(let i = 0; i < elements.comments.length; i++){
                           elements.comments[i].user = undefined
-                         }
-                    })
+                        }
+                      })
+                    }
 
                     return res.status(200).json({articles})
                 }
@@ -105,11 +107,13 @@ module.exports = {
                             message: 'Este artigo não existe.'
                             })
                         }
-
-                        //Omitting the User Id
-                        for (let i = 0; i < article.comments.length; i++){
+                        if(article.comments){
+                          //Omitting the User Id
+                          for (let i = 0; i < article.comments.length; i++){
                             article.comments[i].user = undefined
+                          }
                         }
+
 
                         redisClient.set(`cacheArticle${permalink}`, JSON.stringify(article))
                         redisClient.expire(`cacheArticle${permalink}`, 50)
@@ -132,8 +136,8 @@ module.exports = {
 
             const article = await articleModel.findOne({permalink}).populate('authors').populate('comments')
           
-            if(article === null){
-                res.status(404).json({
+            if(!article){
+                return res.status(404).json({
                     message: 'Este artigo não existe.'
                 })
             }
@@ -166,8 +170,8 @@ module.exports = {
 
             const article = await articleModel.findOne({permalink}).populate('authors').populate('comments')
           
-            if(article === null){
-                res.status(404).json({
+            if(!article){
+                return res.status(404).json({
                     message: 'Este artigo não existe.'
                 })
             }

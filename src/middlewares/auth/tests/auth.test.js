@@ -2,6 +2,7 @@ const app = require('../../../app')
 const request = require('supertest')(app)
 import userModel from '../../../models/userModel'
 const connection = require('../../../config/database/testDB')
+import redisClient from '../../../config/server'
 const {sanitizeTestObject} = require('../../../config/tests/sanitizeTestObject')
 
 const dropUserCollection = async () => userModel.remove()

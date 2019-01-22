@@ -17,3 +17,9 @@ Object {
   "message": "Usuário ou senha inválidos!",
 }
 `;
+
+exports[`Auth tests It should not authenticate the user when it is passed the wrong userName  2`] = `
+Object {
+  "message": "Usuário ou senha inválidos!",
+}
+`;

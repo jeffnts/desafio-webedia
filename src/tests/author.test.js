@@ -2,6 +2,7 @@ const app = require('../app')
 const request = require('supertest')(app)
 import authorModel from '../models/authorModel'
 const connection = require('../config/database/testDB')
+import redisClient from '../config/server'
 const {sanitizeTestObject} = require('../config/tests/sanitizeTestObject')
 
 const dropCollection = async () => authorModel.remove()
@@ -42,7 +43,7 @@ describe('Author tests', () =>{
       expect(sanitizeTestObject(res.body)).toMatchSnapshot()
       expect(res.statusCode).toBe(200)
     })
-    test('It should not return the authors with the wrong the id passed as parameter', async () =>{
+    test('It should not return the authors with the wrong id passed as parameter', async () =>{
       const res = await request.get(`/api/authors/TESTOBJECT02`)
       expect(sanitizeTestObject(res.body)).toMatchSnapshot()
       expect(res.statusCode).toBe(404)
@@ -50,15 +51,15 @@ describe('Author tests', () =>{
   })
 
   describe('PUT method', ()=>{
+    test('It should not update the author with the wrong id passed as parameter', async () =>{
+      const res = await request.put(`/api/authors/TESTOBJECT02`).send({name: 'Zé do Livro'})
+      expect(sanitizeTestObject(res.body)).toMatchSnapshot()
+      expect(res.statusCode).toBe(404)
+    })
     test('It should update the author according the id passed as parameter', async () =>{
       const res = await request.put(`/api/authors/${author._id}`).send({name: 'Zé do Livro'})
       expect(sanitizeTestObject(res.body)).toMatchSnapshot()
       expect(res.statusCode).toBe(200)
-    })
-    test('It should not update the author with the wrong id passed as parameter', async () =>{
-      const res = await request.put(`/api/authors/TESTOBJECT02`).send({name: 'Jõao'})
-      expect(sanitizeTestObject(res.body)).toMatchSnapshot()
-      expect(res.statusCode).toBe(404)
     })
   })
 

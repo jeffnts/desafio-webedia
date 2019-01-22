@@ -1,38 +1,113 @@
 // Jest Snapshot v1, https://goo.gl/fbAQLP
 
+exports[`Article tests DELETE method It should delete the article according the permalink passed as parameter 1`] = `
+Object {
+  "message": "Artigo deletado com sucesso!",
+}
+`;
+
+exports[`Article tests DELETE method It should not delete the article with the wrong permalink passed as parameter 1`] = `
+Object {
+  "message": "Este artigo não existe.",
+}
+`;
+
+exports[`Article tests GET method It shoul return all articles 1`] = `
+Object {
+  "articles": Object {
+    "docs": Array [
+      Object {
+        "__v": 0,
+        "_id": "ObjectId",
+        "authors": Array [
+          Object {
+            "__v": 0,
+            "_id": "ObjectId",
+            "name": "Monteiro Lobato",
+          },
+        ],
+        "comments": Array [],
+        "permalink": "artigo-1",
+        "publicationDate": "2019-01-22T11:18:51.337Z",
+        "title": "Artigo 1",
+        "updateDate": "2019-01-22T11:18:51.337Z",
+      },
+    ],
+    "limit": "EMPTY",
+    "offset": "EMPTY",
+    "totalDocs": 1,
+  },
+}
+`;
+
+exports[`Article tests GET method It should return the articles according the id passed as parameter 1`] = `
+Object {
+  "article": Object {
+    "__v": 0,
+    "_id": "ObjectId",
+    "authors": Array [
+      Object {
+        "__v": 0,
+        "_id": "ObjectId",
+        "name": "Monteiro Lobato",
+      },
+    ],
+    "comments": Array [],
+    "permalink": "artigo-1",
+    "publicationDate": "2019-01-22T11:18:51.337Z",
+    "title": "Artigo 1",
+    "updateDate": "2019-01-22T11:18:51.337Z",
+  },
+}
+`;
+
+exports[`Article tests GET method It should return the articles according the permalink passed as parameter 1`] = `
+Object {
+  "article": Object {
+    "__v": 0,
+    "_id": "ObjectId",
+    "authors": Array [
+      Object {
+        "__v": 0,
+        "_id": "ObjectId",
+        "name": "Monteiro Lobato",
+      },
+    ],
+    "comments": Array [],
+    "permalink": "artigo-1",
+    "publicationDate": "2019-01-22T11:26:29.923Z",
+    "title": "Artigo 1",
+    "updateDate": "2019-01-22T11:26:29.923Z",
+  },
+}
+`;
+
 exports[`Article tests POST method It should create a new article. 1`] = `
 Object {
   "message": "Artigo criado com sucesso!",
 }
 `;
 
-exports[`Article tests POST method It should create a new author. 1`] = `
-Object {
-  "message": "Este autor não existe.",
-}
-`;
-
 exports[`Article tests POST method It should not create a article with a inexistent author. 1`] = `
 Object {
-  "error": "Cast to ObjectId failed for value \\"TEST\\" at path \\"_id\\" for model \\"Author\\"",
-  "message": "Erro no servidor ao tentar cadastrar o artigo.",
-}
-`;
-
-exports[`Article tests POST method It should not create a author with a inexistent author. 1`] = `
-Object {
   "message": "Este autor não existe.",
 }
 `;
 
-exports[`Article tests POST method It should not create a author with a inexistent author. 2`] = `
+exports[`Article tests POST method It should not create a article without a  author. 1`] = `
 Object {
-  "message": "Este autor não existe.",
+  "message": "É obrigatório um artigo ter autor!",
 }
 `;
 
-exports[`Article tests POST method It should not create a author without a  author. 1`] = `
+exports[`Article tests PUT method It should not update the article with the wrong permalink passed as parameter 1`] = `
 Object {
-  "message": "Este autor não existe.",
+  "message": "Este artigo não existe.",
+}
+`;
+
+exports[`Article tests PUT method It should update the article according the permalink passed as parameter 1`] = `
+Object {
+  "message": "Artigo atualizado com sucesso!",
 }
 `;

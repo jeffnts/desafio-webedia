@@ -19,7 +19,7 @@ module.exports ={
             const {permalink} = req.params
             const article = await articleModel.findOne({permalink})
            
-            if(article === null){
+            if(!article){
                 return res.status(404).json({
                     message: 'Artigo não encontrado'
                 })
@@ -100,7 +100,7 @@ module.exports ={
             
             const comment = await commentsModel.findById(commentId).where({user, article})
 
-            if(comment === null || article === null){
+            if(!comment || !article){
                 return res.status(404).json({
                     message: 'Comentário ou artigo não encontrado.'
                 })
