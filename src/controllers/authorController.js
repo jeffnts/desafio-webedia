@@ -35,14 +35,14 @@ module.exports = {
       redisClient.get(`cacheAuthors${offset}${limit}`, async (err, result) => {
         if (result) {
           const resultJSON = JSON.parse(result)
-          res.status(200).json({authors: resultJSON})
+          return res.status(200).json({authors: resultJSON})
         } else {
           const authors = await authorModel.paginate({}, {offset: parseInt(offset), limit: parseInt(limit)})
 
           redisClient.set(`cacheAuthors${offset}${limit}`, JSON.stringify(authors))
           redisClient.expire(`cacheAuthors${offset}${limit}`, 50)
 
-          res.status(200).json({authors})
+          return res.status(200).json({authors})
         }
       })
 
@@ -61,13 +61,13 @@ module.exports = {
       redisClient.get(`caheAuthor${id}`, async (err, result) => {
         if(result){
           const resultJSON = JSON.parse(result)
-          res.status(200).json({author: resultJSON})
+          return res.status(200).json({author: resultJSON})
         }
         else{
           const author = await authorModel.findById(id)
 
           if(author === null){
-            res.status(404).json({
+            return res.status(404).json({
               message: 'Este autor não existe.'
             })
           }
@@ -75,7 +75,7 @@ module.exports = {
           redisClient.set(`caheAuthor${id}`, JSON.stringify(author))
           redisClient.expire(`caheAuthor${id}`, 50)
 
-          res.status(200).json({author})
+          return res.status(200).json({author})
         }
       })
 
@@ -101,7 +101,7 @@ module.exports = {
         })
       }
 
-      redisClient.set(`cacheAuthor${id}`)
+      redisClient.set(`cacheAuthor${id}`, JSON.stringify(author))
 
       return res.status(200).json({
         message: 'Autor atualizado com sucesso!'

@@ -142,7 +142,7 @@ module.exports = {
             await article.set({updateDate: Date.now()})
             await article.save()
 
-            redisClient.set(`cacheArticle${permalink}`)
+            redisClient.set(`cacheArticle${permalink}`, JSON.stringify(article))
 
             return res.status(200).json({
                  message: 'Artigo atualizado com sucesso!'
