@@ -142,7 +142,13 @@ module.exports = {
             await article.set({updateDate: Date.now()})
             await article.save()
 
-            redisClient.set(`cacheArticle${permalink}`, JSON.stringify(article))
+            //Deleting the cache
+            redisClient.del(`cacheArticle${permalink}`)
+            redisClient.keys("cacheArticles*", function(err, rows) {
+                rows.forEach(key =>{
+                 redisClient.del(key)
+                })
+            })
 
             return res.status(200).json({
                  message: 'Artigo atualizado com sucesso!'
@@ -174,12 +180,13 @@ module.exports = {
                 comment.remove()
             })
 
-          redisClient.del(`cacheArticle${permalink}`)
-          redisClient.keys("cacheArticles*", function(err, rows) {
-            rows.forEach(key =>{
-              redisClient.del(key)
+            //Deleting the cache
+            redisClient.del(`cacheArticle${permalink}`)
+            redisClient.keys("cacheArticles*", function(err, rows) {
+                rows.forEach(key =>{
+                redisClient.del(key)
+                })
             })
-          })
 
 
           return res.status(200).json({

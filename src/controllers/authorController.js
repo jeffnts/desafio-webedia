@@ -58,7 +58,7 @@ module.exports = {
     try {
       const{id} = req.params
 
-      redisClient.get(`caheAuthor${id}`, async (err, result) => {
+      redisClient.get(`cacheAuthor${id}`, async (err, result) => {
         if(result){
           const resultJSON = JSON.parse(result)
           return res.status(200).json({author: resultJSON})
@@ -72,8 +72,8 @@ module.exports = {
             })
           }
 
-          redisClient.set(`caheAuthor${id}`, JSON.stringify(author))
-          redisClient.expire(`caheAuthor${id}`, 50)
+          redisClient.set(`cacheAuthor${id}`, JSON.stringify(author))
+          redisClient.expire(`cacheAuthor${id}`, 50)
 
           return res.status(200).json({author})
         }
@@ -101,7 +101,13 @@ module.exports = {
         })
       }
 
-      redisClient.set(`cacheAuthor${id}`, JSON.stringify(author))
+      //Deleting cache
+      redisClient.del(`cacheAuthor${id}`)
+      redisClient.keys("cacheAuthors*", function(err, rows) {
+        rows.forEach(key =>{
+          redisClient.del(key)
+        })
+      })
 
       return res.status(200).json({
         message: 'Autor atualizado com sucesso!'
