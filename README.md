@@ -30,7 +30,7 @@ API that consist in a blog back-end based on the REST architecture as the part o
 - [NodeJs](https://nodejs.org/en/) - Version 10+
 - [Docker](https://www.docker.com/products/docker-desktop)
 
-### Sit down, relax, get you coffee and here we go!
+### Sit down, relax, get your coffee and here we go!
 
 ## 3. Instalation
 1. Clone the project to your computer:
