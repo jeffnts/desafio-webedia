@@ -32,10 +32,10 @@ API that consist in a blog back-end based on the REST architecture as the part o
 
 ### Sit down, relax, get you coffee and here we go!
 
-## 3. Instalation
+## 3. Installation
 1. Clone the project to your computer:
 ```shell
-git clone https://github.com/jeffnts/desafio-webedia.git
+git clone https://jeffnts@bitbucket.org/saudeexata/budget.git
 ```
 
 2. Enter in the project folder:
@@ -82,6 +82,10 @@ npm run docker:dev:build
 2. After the image will be builded, execute the following command to start the application.
 ```
 npm run docker:dev
+```
+3. Then open your browser in:
+```shell
+http://localhost:4000
 ```
 
 ## 5. Project Structure
