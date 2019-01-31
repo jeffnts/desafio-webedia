@@ -83,7 +83,10 @@ npm run docker:dev:build
 ```
 npm run docker:dev
 ```
-
+3. Depois abra seu browser em:
+```shell
+http://localhost:4000
+```
 ## 5. Estrutura do Projeto
 
 ```
