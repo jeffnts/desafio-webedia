@@ -34,8 +34,8 @@ API that consist in a blog back-end based on the REST architecture as the part o
 
 ## 3. Installation
 1. Clone the project to your computer:
-```shell
-git clone https://jeffnts@bitbucket.org/saudeexata/budget.git
+```shell 
+git clone https://github.com/jeffnts/desafio-webedia.git
 ```
 
 2. Enter in the project folder:
